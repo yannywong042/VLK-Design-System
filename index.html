@@ -1,0 +1,2565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" href="icon.png" type="image/png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VLK Design System</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --dark: #1a1a1a;
+      --accent: #007a90;
+      --muted: #888;
+      --border: #e8e8e8;
+      --white: #ffffff;
+      --tag-bg: #EAF2ED;
+      --side-w: 180px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #fff;
+      color: var(--dark);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── PROGRESS BAR ── */
+    #progress {
+      position: fixed;
+      top: 65px;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      z-index: 500;
+      transition: width 0.08s linear;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 65px;
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--dark);
+      text-decoration: none;
+    }
+
+    .top-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .top-links a {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .top-links a:hover {
+      color: var(--accent);
+    }
+
+    /* ── SIDE NAV ── */
+    nav.side-nav {
+      position: fixed;
+      top: 65px;
+      left: 0;
+      width: var(--side-w);
+      height: calc(100vh - 65px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 24px 0 28px;
+      gap: 4px;
+      z-index: 200;
+    }
+
+    nav.side-nav a {
+      font-size: 12px;
+      font-weight: 500;
+      color: #999;
+      text-decoration: none;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      padding: 5px 0;
+      white-space: nowrap;
+      transition: color 0.22s, transform 0.22s;
+      display: block;
+    }
+
+    nav.side-nav a:hover {
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    nav.side-nav a.active {
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+    /* vertical divider line = left edge of all main content */
+    .divider {
+      position: fixed;
+      top: 65px;
+      left: var(--side-w);
+      width: 1px;
+      height: calc(100vh - 65px);
+      background: var(--border);
+      z-index: 199;
+    }
+
+    /* ── MAIN ── */
+    main {
+      margin-left: var(--side-w);
+      padding: 0 52px 0 52px;
+      max-width: calc(var(--side-w) + 860px);
+    }
+
+    /* ── HERO COVER ── */
+    .hero-cover {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+    }
+
+    .hero-cover img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    /* hero text is below the image (separate section) */
+    .hero-intro {
+      padding: 44px 0 18px;
+    }
+
+    .hero-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+      animation: fadeUp 0.55s 0.3s both;
+    }
+
+    .hero {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 3.6vw, 72px);
+      font-weight: 700;
+      line-height: 1.08;
+      max-width: 1280px;
+      margin-bottom: 0;
+      animation: fadeUp 0.7s 0.45s both;
+    }
+
+    /* ── HERO META (below cover) ── */
+    .hero-meta-bar {
+      padding: 40px 0;
+      animation: fadeUp 0.65s 0.6s both;
+    }
+
+    /* ── DELIVERABLE ── */
+    .deliverable {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .deliverable p.desc {
+      font-size: 17px;
+      line-height: 1.85;
+      max-width: 620px;
+      margin-bottom: 32px;
+    }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      max-width: 520px;
+    }
+
+    .impact-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 18px;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+
+    .impact-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(45, 90, 61, 0.08);
+    }
+
+    .impact-card p {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .jump-link {
+      display: inline-block;
+      margin-top: 28px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1.5px solid var(--accent);
+      padding-bottom: 2px;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s, letter-spacing 0.2s;
+    }
+
+    .jump-link:hover {
+      opacity: 0.65;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 64px 0;
+    }
+
+    /* remove the divider above the hero (empty anchor section) */
+    section#Overview {
+      padding: 0;
+      border-bottom: 0;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(21px, 2.6vw, 32px);
+      font-weight: 700;
+      margin-bottom: 18px;
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 26px 0 9px;
+    }
+
+    p {
+      margin-bottom: 14px;
+    }
+
+    /* ── CARDS ── */
+    .challenge-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .findings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .synthesis-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .reflection-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .card-base {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 18px;
+      transition: transform 0.28s cubic-bezier(.22, 1, .36, 1), box-shadow 0.28s, border-color 0.22s;
+    }
+
+    .card-base:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.07);
+      border-color: #999;
+    }
+
+    .card-base h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .card-base h4.serif {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .card-base p,
+    .card-base .body {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .goals-list {
+      list-style: none;
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .goals-list li {
+      display: flex;
+      gap: 14px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .goals-list li::before {
+      content: '→';
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .methods-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .tag {
+      background: var(--tag-bg);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 100px;
+      letter-spacing: 0.03em;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .tag:hover {
+      background: #DEEEDD;
+      transform: scale(1.05);
+    }
+
+    /* ── PHASE ── */
+    .phase {
+      margin-bottom: 48px;
+    }
+
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .phase-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+
+    .phase:hover .phase-num {
+      transform: scale(1.15) rotate(6deg);
+    }
+
+    .phase-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    /* ── FINAL DESIGN ── */
+    .design-feature {
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .design-feature:last-child {
+      border-bottom: none;
+    }
+
+    .design-feature-num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .design-feature h3 {
+      font-size: 20px;
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .bullet-list {
+      list-style: none;
+      margin: 16px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .bullet-list li {
+      font-size: 14px;
+      line-height: 1.8;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .bullet-list li::before {
+      content: '·';
+      position: absolute;
+      left: 5px;
+      color: var(--accent);
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .img-placeholder {
+      width: 100%;
+      background: #f6f6f6;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      margin: 18px 0;
+      border: 1px dashed #e0e0e0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      margin-left: var(--side-w);
+      padding: 40px 52px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+
+    footer a:hover {
+      opacity: 0.7;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* stagger grid children */
+    .stagger>* {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .stagger.in>*:nth-child(1) {
+      transition-delay: 0.04s;
+      opacity: 1;
+      transform: none;
+    }
+
+    .stagger.in>*:nth-child(2) {
+      transition-delay: 0.12s;
+      opacity: 1;
+      transform: none;
+    }
+
+    .stagger.in>*:nth-child(3) {
+      transition-delay: 0.20s;
+      opacity: 1;
+      transform: none;
+    }
+
+    .stagger.in>*:nth-child(4) {
+      transition-delay: 0.28s;
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── STATS SECTION ── */
+    .stats-section {
+      padding: 64px 0 56px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      padding: 0 40px 0 0;
+    }
+
+    .stat-item+.stat-item {
+      padding-left: 40px;
+      border-left: 1px solid var(--border);
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--dark);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+    }
+
+    .stat-number .suffix {
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .stat-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 220px;
+    }
+
+    /* ── FADE HEADLINE ── */
+    .fade-headline-section {
+      padding: 80px 0 72px;
+    }
+
+    .fade-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3.2vw, 40px);
+      font-weight: 600;
+      line-height: 1.35;
+      max-width: 740px;
+    }
+
+    .fade-headline .word {
+      display: inline;
+      color: #d0d0d0;
+      transition: color 0.4s ease;
+    }
+
+    .fade-headline .word.lit {
+      color: var(--dark);
+    }
+
+    /* ── BEFORE / AFTER ── */
+    .before-after-section {
+      padding: 72px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .ba-intro {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 40px;
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    .ba-container {
+      position: relative;
+      width: 100%;
+      max-width: 820px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+      user-select: none;
+      cursor: col-resize;
+    }
+
+    .ba-after,
+    .ba-before {
+      width: 100%;
+      min-height: 420px;
+      padding: 40px 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .ba-after {
+      background: #fff;
+      border: 1px solid var(--border);
+    }
+
+    .ba-before {
+      background: #f0f0f0;
+    }
+
+    /* sliding overlay */
+    .ba-before-wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      transition: none;
+    }
+
+    .ba-before-wrap .ba-before {
+      width: var(--full-w, 820px);
+      min-width: var(--full-w, 820px);
+    }
+
+    .ba-divider-line {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: var(--accent);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .ba-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      background: var(--accent);
+      border-radius: 50%;
+      z-index: 11;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      box-shadow: 0 4px 14px rgba(45, 90, 61, 0.35);
+    }
+
+    .ba-handle svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+    }
+
+    .ba-tag {
+      position: absolute;
+      top: 16px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+      z-index: 12;
+      pointer-events: none;
+    }
+
+    .ba-tag.before {
+      left: 16px;
+      background: #e0e0e0;
+      color: #555;
+    }
+
+    .ba-tag.after {
+      right: 16px;
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* mock screen content */
+    .mock-topbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .mock-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .mock-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--dark);
+      flex: 1;
+    }
+
+    .mock-nav-old {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mock-nav-old span {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: #ddd;
+      color: #666;
+    }
+
+    .mock-nav-new {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mock-nav-new span {
+      font-size: 11px;
+      padding: 4px 12px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .mock-nav-new span.active-tab {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .mock-card-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .mock-card {
+      flex: 1;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .mock-card.old {
+      background: #e8e8e8;
+      color: #777;
+    }
+
+    .mock-card.new {
+      background: #f4f9f6;
+      border: 1px solid #c8e0d0;
+      color: var(--dark);
+    }
+
+    .mock-card h6 {
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .mock-card.new h6 {
+      color: var(--accent);
+    }
+
+    .mock-hero-old {
+      background: #e0e0e0;
+      border-radius: 6px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    .mock-hero-new {
+      background: linear-gradient(135deg, #EAF2ED 0%, #d4e8da 100%);
+      border-radius: 8px;
+      padding: 16px 18px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .mock-hero-new p {
+      font-size: 12px;
+      color: var(--dark);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .mock-hero-new .tag-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .mock-hero-new .tag-row span {
+      font-size: 10px;
+      background: #c8e0d0;
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-weight: 600;
+    }
+
+    .mock-search-old {
+      background: #ddd;
+      border-radius: 4px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    .mock-search-new {
+      background: #fff;
+      border: 1.5px solid var(--accent);
+      border-radius: 8px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--muted);
+      box-shadow: 0 2px 8px rgba(45, 90, 61, 0.08);
+    }
+
+    .mock-search-new span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ── OTHER PROJECTS GRID ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 36px;
+      padding-bottom: 72px;
+    }
+
+    .proj-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(.22, 1, .36, 1), box-shadow 0.35s, border-color 0.25s;
+      cursor: pointer;
+    }
+
+    .proj-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.09);
+      border-color: #ccc;
+    }
+
+    .proj-thumb {
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      height: 200px;
+      padding: 24px 24px 20px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .proj-thumb-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .pt-bar {
+      height: 8px;
+      border-radius: 100px;
+      transition: width 0.5s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .proj-card:hover .pt-bar {
+      filter: brightness(0.92);
+    }
+
+    .pt-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .pt-block {
+      flex: 1;
+      height: 44px;
+      border-radius: 8px;
+      transition: transform 0.4s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .proj-card:hover .pt-block:nth-child(1) {
+      transform: translateY(-3px);
+    }
+
+    .proj-card:hover .pt-block:nth-child(2) {
+      transform: translateY(-5px);
+      transition-delay: 0.04s;
+    }
+
+    .proj-card:hover .pt-block:nth-child(3) {
+      transform: translateY(-2px);
+      transition-delay: 0.08s;
+    }
+
+    .proj-info {
+      padding: 22px 22px 24px;
+    }
+
+    .proj-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .proj-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      margin: 0 0 8px;
+      color: var(--dark);
+      transition: color 0.2s;
+    }
+
+    .proj-card:hover .proj-title {
+      color: var(--accent);
+    }
+
+    .proj-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0 0 14px;
+    }
+
+    .proj-arrow {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+
+    .proj-card:hover .proj-arrow {
+      transform: translateX(4px);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 820px) {
+      :root {
+        --side-w: 0px;
+      }
+
+      nav.side-nav,
+      .divider {
+        display: none;
+      }
+
+      header {
+        padding: 0 20px;
+      }
+
+      main {
+        padding: 0 20px;
+        margin-left: 0;
+      }
+
+      .challenge-grid,
+      .findings-grid,
+      .synthesis-grid,
+      .reflection-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .impact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        margin-left: 0;
+        flex-direction: column;
+        gap: 10px;
+        padding: 32px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="progress"></div>
+
+  <!-- HEADER -->
+  <header>
+    <a href="https://yaniwang.framer.website/" class="logo-text">Yani Wang</a>
+    <ul class="top-links">
+      <li><a href="https://yaniwang.framer.website/about/">About</a></li>
+    </ul>
+  </header>
+
+  <!-- SIDE NAV — horizontal text -->
+  <nav class="side-nav" id="sideNav">
+    <a href="#Overview" class="nav-a">Overview</a>
+    <a href="#Challenge" class="nav-a">Challenge</a>
+    <a href="#Design Audit" class="nav-a">Design Audit</a>
+    <a href="#Prototyping" class="nav-a">Prototyping</a>
+    <a href="#Handoff" class="nav-a">Handoff</a>
+    <a href="#Takeaways" class="nav-a">Takeaways</a>
+  </nav>
+
+  <div class="divider"></div>
+
+  <main>
+
+    <section id="Overview"></section>
+    <!-- HERO COVER -->
+    <div class="hero-cover">
+      <img src="Cover.png" alt="Cover">
+    </div>
+
+    <div class="hero-intro">
+      <p class="hero-label">Case Study</p>
+      <h1 class="hero">VLK Design System</h1>
+    </div>
+
+    <!-- META BAR -->
+    <div class="hero-meta-bar">
+      <div class="meta-grid">
+        <div class="meta-item">
+          <p>Van Lanschot Kempen is a investment bank where the design system primarily powers web and banker
+            tooling products, while the client-facing mobile cluster inherits the core system but maintains
+            inconsistencies due to platform constraints.
+            <br> <br> <strong>I audited and reconciled Figma token library with nearly 700 tokens </strong>
+            against codebase to identify naming and value
+            inconsistencies, restructured token architecture from only one to three tiers (Core, Semantic, Component),
+            established the documentation, enabled a <strong>Figma-to-code pipeline that reduced design-to-development
+              drift.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-section">
+      <div class="stats-grid stagger" id="statsGrid">
+        <div class="stat-item">
+          <div class="stat-number">
+            <span class="count" data-target="700">0</span>
+          </div>
+          <div class="stat-label">Tokens Restructured</div>
+          <div class="stat-desc">Audited and reconciled Figma token library with nearly 700 tokens.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">
+            <span class="count" data-target="105">0</span>
+          </div>
+          <div class="stat-label">Component Categories</div>
+          <div class="stat-desc">Documented 105 components categories with explicit usage rules.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">
+            <span class="count" data-target="95">0</span><span class="suffix">%</span>
+          </div>
+          <div class="stat-label">Accessibility Compliance</div>
+          <div class="stat-desc">Achieved 95% color contrast compliance across all component categories.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FADE HEADLINE -->
+    <div class="fade-headline-section">
+      <p class="fade-headline" id="fadeHeadline"></p>
+      <a href="#Handoff" class="jump-link">Jump to see design outcome →</a>
+    </div>
+
+    <!-- PROJECT CONTEXT -->
+    <section id="Challenge">
+      <p class="section-label">Challenge</p>
+      <h3 class="reveal">The Challenge: Build a Design System closes the loop between design and code and scales across
+        platforms.</h3>
+      <div class="findings-grid stagger">
+        <div class="card-base" style="padding:0; overflow:hidden;">
+          <img src="Busines_Challenge.png" onclick="openLightbox(this.src)"
+            style="width:100%; height:240px; object-fit:cover; display:block; filter:saturate(0.8);">
+          <div style="padding:18px 18px 20px;">
+            <h4>Business Challenge</h4>
+            <p class="body">Design fragmentation across VLK’s diverse business units and mobile tooling leads to
+              resource duplication and disconnected user experience.</p>
+          </div>
+        </div>
+
+        <div class="card-base" style="padding:0; overflow:hidden;">
+          <img src="Rename.jpg" onclick="openLightbox(this.src)"
+            style="width:100%; height:240px; object-fit:cover; display:block; filter:saturate(0.8);">
+          <div style="padding:18px 18px 20px;">
+            <h4>Naming Structure</h4>
+            <p class="body">The existing naming structure lacks a tiered token architecture, while the rollout of Dark
+              Mode across business units is causing significant naming fragmentation.</p>
+          </div>
+        </div>
+
+        <div class="card-base" style="padding:0; overflow:hidden;">
+          <img src="Alignment.jpeg" onclick="openLightbox(this.src)"
+            style="width:100%; height:240px; object-fit:cover; display:block; filter:saturate(0.8);">
+          <div style="padding:18px 18px 20px;">
+            <h4>Dev Team Alignment</h4>
+            <p class="body">Inconsistent documentation standards across business units leading to high alignment costs
+              between Design side and Dev side.</p>
+          </div>
+
+          <!-- Lightbox overlay -->
+          <div id="lightbox" onclick="closeLightbox()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999;
+       align-items:center; justify-content:center; cursor:zoom-out;">
+            <img id="lightbox-img" src=""
+              style="max-width:90vw; max-height:90vh; border-radius:8px; box-shadow:0 24px 80px rgba(0,0,0,0.5);">
+          </div>
+
+          <script>
+            function openLightbox(src) {
+              const lb = document.getElementById('lightbox');
+              document.getElementById('lightbox-img').src = src.replace('w=600', 'w=1400');
+              lb.style.display = 'flex';
+              document.addEventListener('keydown', escClose);
+            }
+            function closeLightbox() {
+              document.getElementById('lightbox').style.display = 'none';
+              document.removeEventListener('keydown', escClose);
+            }
+            function escClose(e) { if (e.key === 'Escape') closeLightbox(); }
+          </script>
+        </div>
+      </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="Design Audit">
+      <p class="section-label">Design Audit</p>
+      <div class="phase reveal" id="User Research-phase1">
+        <div class="phase-header">
+          <div class="phase-num">1</div>
+          <div class="phase-title">Audit</div>
+        </div>
+        <p>I audited 629 tokens across three layers: Primitives, Semantic, and Component, checking for hardcoded
+          values that bypassed the token system (207 cases), naming inconsistencies like spaces and commas in key names
+          (132 issues), and primitives missing semantic references (24 gaps). For each issue, I documented a concrete
+          fix. The goal was to make every problem explicit and actionable.</p>
+        <!-- ════════════════════════════════════════════
+     TOKEN AUDIT SECTION
+     ════════════════════════════════════════════ -->
+
+        <style>
+          /* ── SHARED CHIP STYLES ── */
+          .ta-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 7px;
+            border-radius: 8px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .04em;
+            white-space: nowrap;
+            margin: 1px 2px 1px 0
+          }
+
+          .ta-chip-naming {
+            background: #EDE9FE;
+            color: #6D28D9
+          }
+
+          .ta-chip-abbr {
+            background: #FEF3C7;
+            color: #92400E
+          }
+
+          .ta-chip-sep {
+            background: #FEE2E2;
+            color: #991B1B
+          }
+
+          .ta-chip-redund {
+            background: #D1FAE5;
+            color: #065F46
+          }
+
+          .ta-chip-verbose {
+            background: #F3E8FF;
+            color: #7C3AED
+          }
+
+          .ta-chip-spec {
+            background: #FCE7F3;
+            color: #9D174D
+          }
+
+          .ta-chip-mixed {
+            background: #E0F7FA;
+            color: #0369A1
+          }
+
+          .ta-chip-misplace {
+            background: #FFEDD5;
+            color: #C2410C
+          }
+
+          .ta-chip-orphan {
+            background: #F3F4F6;
+            color: #374151
+          }
+
+          .ta-chip-dup {
+            background: #FEF9C3;
+            color: #854D0E
+          }
+
+          .ta-chip-ok {
+            background: #D1FAE5;
+            color: #065F46
+          }
+
+          .ta-chip-color-cat {
+            background: #DBEAFE;
+            color: #1D4ED8
+          }
+
+          .ta-chip-comp-cat {
+            background: #FEE2E2;
+            color: #991B1B
+          }
+
+          .ta-chip-typo-cat {
+            background: #F3E8FF;
+            color: #6B21A8
+          }
+
+          .ta-chip-spacing-cat {
+            background: #DCFCE7;
+            color: #166534
+          }
+
+          /* ── ROOT ── */
+          .ta-root {
+            margin: 36px 0 0;
+            font-family: 'DM Sans', sans-serif;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, .06)
+          }
+
+          /* ── HERO ── */
+          .ta-hero {
+            background: rgba(0, 122, 144, 0.12);
+            color: var(--dark);
+            padding: 32px 40px 32px
+          }
+
+          .ta-hero-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+            padding-bottom: 32px
+          }
+
+          .ta-hero-brand {
+            font-size: 10px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 7px
+          }
+
+          .ta-hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.15;
+            color: var(--dark)
+          }
+
+          .ta-hero-sub {
+            font-size: 12px;
+            color: var(--muted);
+            max-width: 460px;
+            line-height: 1.6;
+            margin: 0
+          }
+
+
+          /* structure key cards in hero */
+          .ta-struct-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 24px 40px 32px
+          }
+
+          .ta-struct-card {
+            flex: 1;
+            min-width: 190px;
+            background: rgba(255, 255, 255, .65);
+            border: 1px solid rgba(0, 0, 0, .08);
+            border-radius: 10px;
+            padding: 13px 15px
+          }
+
+          .ta-struct-card-label {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px
+          }
+
+          .ta-sk-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-bottom: 4px
+          }
+
+          .ta-sk-seg {
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: 600
+          }
+
+          .ta-sk-sep {
+            color: rgba(0, 0, 0, .25);
+            font-size: 10px
+          }
+
+          .ta-seg-cat {
+            background: #DBEAFE;
+            color: #1D4ED8
+          }
+
+          .ta-seg-comp {
+            background: #FEE2E2;
+            color: #991B1B
+          }
+
+          .ta-seg-prop {
+            background: #DCFCE7;
+            color: #166534
+          }
+
+          .ta-seg-var {
+            background: #F3E8FF;
+            color: #6B21A8
+          }
+
+          .ta-seg-state {
+            background: #FEF3C7;
+            color: #92400E
+          }
+
+          .ta-struct-eg {
+            font-size: 10px;
+            color: var(--muted);
+            font-family: monospace;
+            margin-top: 3px;
+            opacity: .65
+          }
+
+          /* ── STICKY NAV BAR ── */
+          .ta-nav-bar {
+            position: sticky;
+            top: 65px;
+            z-index: 300;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none
+          }
+
+          .ta-nav-bar::-webkit-scrollbar {
+            display: none
+          }
+
+          .ta-nav-btn {
+            background: none;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            color: #999;
+            padding: 11px 16px;
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: color .18s, border-color .18s;
+            letter-spacing: .03em
+          }
+
+          .ta-nav-btn:hover {
+            color: #007a90
+          }
+
+          .ta-nav-btn.active {
+            color: #007a90;
+            border-bottom-color: #007a90;
+            font-weight: 600
+          }
+
+          /* ── CONTENT ── */
+          .ta-content {
+            padding: 28px 32px 36px;
+            background: #fff
+          }
+
+          .ta-panel {
+            display: none
+          }
+
+          .ta-panel.active {
+            display: block
+          }
+
+          /* section header */
+          .ta-sec-hdr {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--accent);
+            margin-bottom: 18px;
+            flex-wrap: wrap
+          }
+
+          .ta-sec-hdr h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            color: var(--dark)
+          }
+
+          .ta-sec-path {
+            font-family: monospace;
+            font-size: 10px;
+            color: var(--muted);
+            background: #f7f9fa;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 8px
+          }
+
+          .ta-sec-count {
+            font-size: 11px;
+            color: var(--muted)
+          }
+
+          /* table */
+          .ta-tbl-wrap {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            overflow-x: auto
+          }
+
+          .ta-tbl {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 680px;
+            font-size: 12px
+          }
+
+          .ta-tbl thead th {
+            background: #f7f9fa;
+            padding: 8px 12px;
+            text-align: left;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap
+          }
+
+          .ta-tbl tbody tr {
+            border-bottom: 1px solid #f1f3f5;
+            transition: background .1s
+          }
+
+          .ta-tbl tbody tr:last-child {
+            border-bottom: none
+          }
+
+          .ta-tbl tbody tr:hover td {
+            background: #f0f8fa;
+            color: #007a90
+          }
+
+          .ta-tbl tbody tr:hover .ta-mono {
+            color: #007a90
+          }
+
+          .ta-tbl tbody tr:hover .ta-rec {
+            color: #007a90
+          }
+
+          .ta-tbl tbody tr:hover .ta-val {
+            color: #007a90
+          }
+
+          .ta-tbl tbody tr:hover .ta-note {
+            color: #007a90
+          }
+
+          .ta-tbl td {
+            padding: 7px 12px;
+            vertical-align: middle
+          }
+
+          .ta-mono {
+            font-family: monospace;
+            font-size: 11px;
+            color: var(--dark)
+          }
+
+          .ta-rec {
+            font-family: monospace;
+            font-size: 11px;
+            color: var(--accent);
+            font-weight: 700
+          }
+
+          .ta-val {
+            font-family: monospace;
+            font-size: 11px;
+            color: var(--muted)
+          }
+
+          .ta-note {
+            font-size: 10px;
+            color: var(--muted);
+            font-style: italic
+          }
+
+          /* structure key panel */
+          .ta-struct-key-panel {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow: hidden
+          }
+
+          .ta-sk-row-light {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
+            font-size: 11px
+          }
+
+          .ta-sk-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--muted);
+            min-width: 130px;
+            flex-shrink: 0
+          }
+
+          .ta-sk-sep-light {
+            color: #bbb;
+            font-size: 11px
+          }
+        </style>
+
+        <div class="ta-root reveal">
+
+          <!-- HERO -->
+          <div class="ta-hero">
+            <div class="ta-hero-top">
+              <div>
+                <h2>Token Naming Audit</h2>
+                <p class="ta-hero-sub">629 tokens audited across three layers — Primitives, Semantic, and Component.
+                  Every issue is documented with a concrete rename fix.</p>
+              </div>
+            </div>
+          </div>
+          <div class="ta-struct-row">
+            <div class="ta-struct-card">
+              <div class="ta-struct-card-label">Semantic Color</div>
+              <div class="ta-sk-row"><span class="ta-sk-seg ta-seg-cat">color</span><span
+                  class="ta-sk-sep">/</span><span class="ta-sk-seg ta-seg-prop">property</span><span
+                  class="ta-sk-sep">/</span><span class="ta-sk-seg ta-seg-var">variant</span><span
+                  class="ta-sk-sep">/</span><span class="ta-sk-seg ta-seg-state">state</span></div>
+              <div class="ta-struct-eg">e.g. color / text / secondary / hover</div>
+            </div>
+            <div class="ta-struct-card">
+              <div class="ta-struct-card-label">Semantic Number</div>
+              <div class="ta-sk-row"><span class="ta-sk-seg ta-seg-cat">radius · borderwidth · typography</span><span
+                  class="ta-sk-sep">/</span><span class="ta-sk-seg ta-seg-prop">property</span><span
+                  class="ta-sk-sep">/</span><span class="ta-sk-seg ta-seg-var">variant</span></div>
+              <div class="ta-struct-eg">e.g. radius / btn / sm</div>
+            </div>
+            <div class="ta-struct-card">
+              <div class="ta-struct-card-label">Component (simple)</div>
+              <div class="ta-sk-row"><span class="ta-sk-seg ta-seg-comp">component</span><span
+                  class="ta-sk-sep">/</span><span class="ta-sk-seg ta-seg-prop">property</span><span
+                  class="ta-sk-sep">/</span><span class="ta-sk-seg ta-seg-var">variant</span><span
+                  class="ta-sk-sep">/</span><span class="ta-sk-seg ta-seg-state">state</span></div>
+              <div class="ta-struct-eg">e.g. nav / bg / solid / hover</div>
+            </div>
+            <div class="ta-struct-card">
+              <div class="ta-struct-card-label">Component (complex)</div>
+              <div class="ta-sk-row"><span class="ta-sk-seg ta-seg-comp">component</span><span
+                  class="ta-sk-sep">/</span><span class="ta-sk-seg ta-seg-prop">property</span><span
+                  class="ta-sk-sep">/</span><span class="ta-sk-seg ta-seg-var">variant</span><span
+                  class="ta-sk-sep">/</span><span class="ta-sk-seg ta-seg-var">sub-variant</span><span
+                  class="ta-sk-sep">/</span><span class="ta-sk-seg ta-seg-state">state</span></div>
+              <div class="ta-struct-eg">e.g. signal / success / solid / bg / normal</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STICKY NAV -->
+        <nav class="ta-nav-bar" id="ta-nav"></nav>
+
+        <!-- CONTENT -->
+        <div class="ta-content" id="ta-content"></div>
+
+      </div>
+
+      <script>
+        (function () {
+          const T = (c, t) => `<span class="ta-chip ${c}">${t}</span>`;
+          const N = () => T('ta-chip-naming', 'NAMING');
+          const AB = () => T('ta-chip-abbr', 'ABBR');
+          const S = () => T('ta-chip-sep', 'SEPARATOR');
+          const R = () => T('ta-chip-redund', 'REDUNDANT');
+          const V = () => T('ta-chip-verbose', 'VERBOSE');
+          const SP = () => T('ta-chip-spec', 'SPEC.CHARS');
+          const M = () => T('ta-chip-mixed', 'MIXED TYPES');
+          const MP = () => T('ta-chip-misplace', 'MISPLACED');
+          const OR = () => T('ta-chip-orphan', 'ORPHAN');
+          const OK = () => T('ta-chip-ok', 'OK');
+          const DU = () => T('ta-chip-dup', 'DUPLICATE');
+
+          const SECTIONS = [
+            { id: 'structure', label: 'Structure Key', custom: true },
+            {
+              id: 'meta', label: 'Meta', path: 'root level', count: '3 tokens', cat: 'color',
+              cols: ['Current Path', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [['logo', OR(), 'meta / logo', 'Root-level string — no parent category'],
+              ['brand', OR(), 'meta / brand', ''],
+              ['mode', OR(), 'meta / mode', '']]
+            },
+            {
+              id: 'text', label: 'Text', path: 'colors.text.*', count: '13 tokens', cat: 'color',
+              cols: ['Current Path', 'Value / Alias', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['colors.text.normal', 'alias: colors.br.navy', OK(), 'color / text / default', ''],
+                ['colors.text.less important on white', 'alias: colors.gr.600', V(), 'color / text / secondary', 'Verbose + context-specific'],
+                ['colors.text.less important on 50-100', 'alias: colors.gr.650', V(), 'color / text / secondary / on-subtle', ''],
+                ['colors.text.less important on 150', 'alias: colors.gr.700', V(), 'color / text / secondary / on-contrast', ''],
+                ['colors.text.inverse*', 'alias: colors.gr.000', SP(), 'color / text / inverse', 'Asterisk in name'],
+                ['colors.text.emphasis', 'alias: colors.br.navy', OK(), 'color / text / emphasis', ''],
+                ['colors.text.extra emphasis', 'alias: colors.gr.1000', V(), 'color / text / emphasis / strong', '"extra emphasis" verbose'],
+                ['colors.text.link', 'alias: colors.br.navy', OK(), 'color / text / link', ''],
+                ['colors.text.headings', 'alias: colors.br.navy', OK(), 'color / text / heading', ''],
+                ['colors.text.emphasis-dm', 'alias: colors.br.bluegray', S(), 'color / text / emphasis / dm', 'Hyphen used for variant level'],
+                ['colors.text.newscard body', 'alias: colors.br.navy', MP(), 'card / text / news / body', 'Component-specific — belongs in card'],
+                ['colors.text.testimonial card body', 'alias: colors.br.navy', MP(), 'card / text / testimonial / body', 'Belongs in card component'],
+                ['colors.text.muted link*', '#597380', SP() + V(), 'color / text / muted', 'Asterisk; raw hex not aliased to primitive']]
+            },
+            {
+              id: 'surface', label: 'Surface', path: 'colors.surface.*', count: '11 tokens', cat: 'color',
+              cols: ['Current Path', 'Value / Alias', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['colors.surface.main', '#FFFFFF', OK(), 'color / surface / default', ''],
+                ['colors.surface.main secondary', 'alias: gr.050', V(), 'color / surface / secondary', '"main secondary" — two words'],
+                ['colors.surface.main secondary contrast', 'alias: gr.100', V(), 'color / surface / secondary / contrast', 'Three words in one key'],
+                ['colors.surface.header', 'alias: gr.000', OK(), 'color / surface / header', ''],
+                ['colors.surface.megamenu', 'alias: br.navy', OK(), 'color / surface / megamenu', ''],
+                ['colors.surface.footer', 'alias: br.navy', OK(), 'color / surface / footer', ''],
+                ['colors.surface.overlay', 'rgba(34,38,42,.32)', OK(), 'color / surface / overlay', 'Alpha should alias to transparent token'],
+                ['colors.surface.card on main', 'alias: gr.050', V(), 'color / surface / card', '"on main" is context, not semantic'],
+                ['colors.surface.card on main secondary', 'alias: gr.100', V(), 'color / surface / card / secondary', '"on main secondary" — verbose'],
+                ['colors.surface.documentation', 'alias: gr.100', OK(), 'color / surface / documentation', ''],
+                ['colors.surface.documentation contrast', 'alias: gr.150', OK(), 'color / surface / documentation / contrast', '']]
+            },
+            {
+              id: 'borders', label: 'Borders', path: 'colors.borders.*', count: '6 tokens', cat: 'color',
+              cols: ['Current Path', 'Value / Alias', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['colors.borders.low contrast', 'alias: gr.150', N() + AB(), 'color / borders / low', ''],
+                ['colors.borders.low contrast tr', 'rgba(205,209,213,.5)', N() + AB(), 'color / borders / low / tr', ''],
+                ['colors.borders.medium contrast', 'alias: gr.200', N() + AB(), 'color / borders / medium', ''],
+                ['colors.borders.medium contrast tr', 'rgba(181,189,197,.5)', N() + AB(), 'color / borders / medium / tr', ''],
+                ['colors.borders.high contrast', 'alias: gr.250', N() + AB(), 'color / borders / high', ''],
+                ['colors.borders.high contrast tr', 'rgba(154,163,170,.5)', N() + AB(), 'color / borders / high / tr', '']]
+            },
+            {
+              id: 'signal', label: 'Signal', path: 'colors.signal.*', count: '~35 tokens', cat: 'color',
+              cols: ['Current Path', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['colors.signal.negative', N() + V(), 'signal / negative', 'Missing severity level'],
+                ['colors.signal.positive', N() + V(), 'signal / positive', ''],
+                ['colors.signal.solid txt.all', N() + AB(), 'signal / solid / txt / all', '"all" is vague state'],
+                ['colors.signal.success.plain txt.normal', N() + AB(), 'signal / success / plain / txt / normal', ''],
+                ['colors.signal.success.plain txt.hover', N() + AB(), 'signal / success / plain / txt / hover', ''],
+                ['colors.signal.success.plain txt.on ghost', N() + AB() + V(), 'signal / success / plain / txt / ghost', '"on ghost" → ghost'],
+                ['colors.signal.success.solid txt.normal', N() + AB(), 'signal / success / solid / txt / normal', ''],
+                ['colors.signal.success.solid bg.normal', N() + AB(), 'signal / success / solid / bg / normal', ''],
+                ['colors.signal.success.ghost bg.normal', N() + AB(), 'signal / success / ghost / bg / normal', ''],
+                ['colors.signal.success.shape.normal', OK(), 'signal / success / shape / normal', ''],
+                ['colors.signal.error.plain txt.on ghost', N() + AB() + V(), 'signal / error / plain / txt / ghost', ''],
+                ['colors.signal.error.solid bg.for under text', N() + AB() + V(), 'signal / error / solid / bg / underlay', ''],
+                ['colors.signal.error.ghost bg.tbd', V(), 'signal / error / ghost / bg / alt', '"tbd" not valid in production'],
+                ['colors.signal.error.shape.normal', OK(), 'signal / error / shape / normal', ''],
+                ['colors.signal.warning.solid bg.for under text', N() + AB() + V(), 'signal / warning / solid / bg / underlay', ''],
+                ['colors.signal.warning.shape.normal', OK(), 'signal / warning / shape / normal', ''],
+                ['colors.signal.info.solid txt.normal', N() + AB(), 'signal / info / solid / txt / normal', ''],
+                ['colors.signal.info.solid bg.normal', N() + AB(), 'signal / info / solid / bg / normal', ''],
+                ['colors.signal.info.ghost bg.normal', N() + AB(), 'signal / info / ghost / bg / normal', ''],
+                ['colors.signal.info.shape.normal', OK(), 'signal / info / shape / normal', '']]
+            },
+            {
+              id: 'selections', label: 'Selections', path: 'colors.selections.*', count: '6 tokens', cat: 'color',
+              cols: ['Current Path', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['colors.selections.zebra', OK(), 'color / selection / zebra', ''],
+                ['colors.selections.selected', OK(), 'color / selection / selected', ''],
+                ['colors.selections.hover', OK(), 'color / selection / default / hover', ''],
+                ['colors.selections.selected special', N(), 'color / selection / selected / special', '"selected special" — two words in one key'],
+                ['colors.selections.selected special on 100', N() + V(), 'color / selection / selected / special / on-100', 'Context-specific + three words'],
+                ['colors.selections.selected special hover', N(), 'color / selection / selected / special / hover', 'Three concepts merged']]
+            },
+            {
+              id: 'collapse', label: 'Collapse', path: 'colors.collapse.*', count: '11 tokens', cat: 'comp',
+              cols: ['Current Path', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['colors.collapse.trigger normal', N() + MP(), 'collapse / txt / trigger / default / normal', ''],
+                ['colors.collapse.trigger normal, muted', N() + S() + MP(), 'collapse / txt / trigger / muted / normal', 'Comma used as variant separator'],
+                ['colors.collapse.trigger hover', N() + MP(), 'collapse / txt / trigger / default / hover', ''],
+                ['colors.collapse.trigger hover, muted', N() + S() + MP(), 'collapse / txt / trigger / muted / hover', ''],
+                ['colors.collapse.divider', MP(), 'collapse / border / divider / default', ''],
+                ['colors.collapse.divider muted', N() + MP(), 'collapse / border / divider / muted', ''],
+                ['colors.collapse.trigger font', M() + MP(), 'collapse / font / trigger / default', 'String token mixed into color group'],
+                ['colors.collapse.chevron normal', N() + MP(), 'collapse / txt / chevron / default / normal', ''],
+                ['colors.collapse.chevron normal, muted', N() + S() + MP(), 'collapse / txt / chevron / muted / normal', ''],
+                ['colors.collapse.chevron hover', N() + MP(), 'collapse / txt / chevron / default / hover', ''],
+                ['colors.collapse.chevron hover, muted', N() + S() + MP(), 'collapse / txt / chevron / muted / hover', '']]
+            },
+            {
+              id: 'table', label: 'Table', path: 'colors.table.*', count: '2 tokens', cat: 'comp',
+              cols: ['Current Path', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['colors.table.divider', MP(), 'table / borders / divider / default', 'Misplaced under colors'],
+                ['colors.table.divider, dark', S() + MP(), 'table / borders / divider / dark', 'Comma used as variant separator']]
+            },
+            {
+              id: 'nav', label: 'Nav', path: 'colors.nav.*', count: '~52 tokens', cat: 'comp',
+              cols: ['Current Path', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['colors.nav.plain muted txt.normal', N() + AB() + MP(), 'nav / txt / plain / muted / normal', ''],
+                ['colors.nav.plain muted txt.hover', N() + AB() + MP(), 'nav / txt / plain / muted / hover', ''],
+                ['colors.nav.plain muted txt.active', N() + AB() + MP(), 'nav / txt / plain / muted / active', ''],
+                ['colors.nav.plain muted txt.disabled', N() + AB() + MP(), 'nav / txt / plain / muted / disabled', ''],
+                ['colors.nav.plain muted txt.visited', N() + AB() + MP(), 'nav / txt / plain / muted / visited', ''],
+                ['colors.nav.plain txt.normal', N() + AB() + MP(), 'nav / txt / plain / normal', ''],
+                ['colors.nav.plain txt.normal alt', N() + AB() + MP(), 'nav / txt / plain / normal / alt', ''],
+                ['colors.nav.plain txt.hover', N() + AB() + MP(), 'nav / txt / plain / hover', ''],
+                ['colors.nav.plain txt.active', N() + AB() + MP(), 'nav / txt / plain / active', ''],
+                ['colors.nav.solid txt.all enabled', N() + AB() + MP() + V(), 'nav / txt / solid / normal', '"all enabled" verbose'],
+                ['colors.nav.solid bg.normal', AB() + MP(), 'nav / bg / solid / normal', ''],
+                ['colors.nav.solid bg.hover', AB() + MP(), 'nav / bg / solid / hover', ''],
+                ['colors.nav.semisolid bg.muted hover', N() + AB() + MP(), 'nav / bg / semisolid / muted / hover', ''],
+                ['colors.nav.outline bg.normal*', AB() + MP() + SP(), 'nav / bg / outline / normal', 'Asterisk in key'],
+                ['colors.nav.cta txt.all enabled', AB() + MP() + V(), 'nav / txt / cta / normal', '"all enabled" verbose'],
+                ['colors.nav.cta bg.normal', AB() + MP(), 'nav / bg / cta / normal', ''],
+                ['colors.nav.cta stroke.normal', MP(), 'nav / stroke / cta / normal', '']]
+            },
+            {
+              id: 'formfield', label: 'Form Field', path: 'colors.formfield.*', count: '~36 tokens', cat: 'comp',
+              cols: ['Current Path', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['colors.formfield.text.placeholder', MP(), 'formfield / text / default / placeholder', ''],
+                ['colors.formfield.text.normal', MP(), 'formfield / text / default / normal', ''],
+                ['colors.formfield.text.disabled', MP(), 'formfield / text / default / disabled', ''],
+                ['colors.formfield.text alt.placeholder', N() + MP(), 'formfield / text / secondary / placeholder', ''],
+                ['colors.formfield.text alt.normal', N() + MP(), 'formfield / text / secondary / normal', '"alt" merged into property level'],
+                ['colors.formfield.border.normal', MP(), 'formfield / border / default / normal', ''],
+                ['colors.formfield.border.hover', MP(), 'formfield / border / default / hover', ''],
+                ['colors.formfield.border.readonly', MP(), 'formfield / border / default / readonly', ''],
+                ['colors.formfield.bg.normal', AB() + MP(), 'formfield / bg / default / normal', ''],
+                ['colors.formfield.bg.hover', AB() + MP(), 'formfield / bg / default / hover', ''],
+                ['colors.formfield.bg alt.normal', N() + AB() + MP(), 'formfield / bg / secondary / normal', ''],
+                ['colors.formfield.bg alt.hover', N() + AB() + MP(), 'formfield / bg / secondary / hover', '']]
+            },
+            {
+              id: 'toggle', label: 'Toggle', path: 'colors.toggle.*', count: '14 tokens', cat: 'comp',
+              cols: ['Current Path', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['colors.toggle.unchecked.bg.normal', AB(), 'toggle / bg / unchecked / normal', ''],
+                ['colors.toggle.unchecked.bg.hover', AB(), 'toggle / bg / unchecked / hover', ''],
+                ['colors.toggle.unchecked.bg.disabled', AB(), 'toggle / bg / unchecked / disabled', ''],
+                ['colors.toggle.unchecked.control.normal', OK(), 'toggle / control / unchecked / normal', ''],
+                ['colors.toggle.unchecked.stroke.normal', OK(), 'toggle / stroke / unchecked / normal', ''],
+                ['colors.toggle.unchecked.stroke.symbol', OK(), 'toggle / stroke / unchecked / symbol', ''],
+                ['colors.toggle.checked.bg.normal', AB(), 'toggle / bg / checked / normal', ''],
+                ['colors.toggle.checked.bg.hover', AB(), 'toggle / bg / checked / hover', ''],
+                ['colors.toggle.checked.bg.disabled', AB(), 'toggle / bg / checked / disabled', ''],
+                ['colors.toggle.checked.control.normal', OK(), 'toggle / control / checked / normal', ''],
+                ['colors.toggle.checked.stroke.normal', OK(), 'toggle / stroke / checked / normal', '']]
+            },
+            {
+              id: 'radiocheck', label: 'Radio/Check', path: 'colors.radiocheck.*', count: '12 tokens', cat: 'comp',
+              cols: ['Current Path', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['colors.radiocheck.unchecked.bg.normal', AB(), 'radiocheck / bg / unchecked / normal', ''],
+                ['colors.radiocheck.unchecked.bg.hover', AB(), 'radiocheck / bg / unchecked / hover', ''],
+                ['colors.radiocheck.unchecked.bg.disabled', AB(), 'radiocheck / bg / unchecked / disabled', ''],
+                ['colors.radiocheck.unchecked.control.normal?', SP(), 'radiocheck / control / unchecked / normal', 'Question mark in name'],
+                ['colors.radiocheck.unchecked.stroke.normal', OK(), 'radiocheck / stroke / unchecked / normal', ''],
+                ['colors.radiocheck.unchecked.stroke.hover', OK(), 'radiocheck / stroke / unchecked / hover', ''],
+                ['colors.radiocheck.checked.bg.normal', AB(), 'radiocheck / bg / checked / normal', ''],
+                ['colors.radiocheck.checked.bg.hover', AB(), 'radiocheck / bg / checked / hover', ''],
+                ['colors.radiocheck.checked.control.normal', OK(), 'radiocheck / control / checked / normal', ''],
+                ['colors.radiocheck.checked.stroke.normal', OK(), 'radiocheck / stroke / checked / normal', '']]
+            },
+            {
+              id: 'slider', label: 'Slider', path: 'colors.slider.*', count: '18 tokens', cat: 'comp',
+              cols: ['Current Path', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['colors.slider.slider values', R() + V(), 'slider / txt / values / default', 'Parent name repeated in child'],
+                ['colors.slider.track.bg.slider track 2', R() + AB(), 'slider / bg / track / 2', ''],
+                ['colors.slider.track.bg.slider track 3', R() + AB(), 'slider / bg / track / 3', ''],
+                ['colors.slider.track.filled.normal', OK(), 'slider / bg / filled / normal', ''],
+                ['colors.slider.track.filled.disabled', OK(), 'slider / bg / filled / disabled', ''],
+                ['colors.slider.track.unfilled.normal', OK(), 'slider / bg / unfilled / normal', ''],
+                ['colors.slider.knob.knob bg.normal', R() + AB(), 'slider / bg / knob / normal', ''],
+                ['colors.slider.knob.knob value.text.normal', R(), 'slider / txt / knob-value / normal', ''],
+                ['colors.slider.knob.knob value.bg.normal', R() + AB(), 'slider / bg / knob-value / normal', ''],
+                ['colors.slider.end values.bg normal', N() + AB(), 'slider / bg / end-values / normal', ''],
+                ['colors.slider.end values.txt normal', N() + AB(), 'slider / txt / end-values / normal', '⚠ All placeholder #FFFFFF']]
+            },
+            {
+              id: 'radius', label: 'Radius', path: 'radius.*', count: '10 tokens', cat: 'comp',
+              cols: ['Current Path', 'Value', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['radius.btn-xs', '4px', S() + MP(), 'btn / radius / xs', ''],
+                ['radius.btn-sm', '4px', S() + MP(), 'btn / radius / sm', ''],
+                ['radius.btn-small', '4px', S() + DU() + MP(), 'btn / radius / sm', '"small" vs "sm" — duplicate of btn-sm'],
+                ['radius.btn-md', '8px', S() + MP(), 'btn / radius / md', ''],
+                ['radius.btn-lg', '8px', S() + MP(), 'btn / radius / lg', ''],
+                ['radius.btn-xl', '12px', S() + MP(), 'btn / radius / xl', ''],
+                ['radius.card-sm', '16px', S() + MP(), 'card / radius / sm', ''],
+                ['radius.card-sm + offset', '18px', S() + SP() + MP(), 'card / radius / sm / offset', '+ sign in key name'],
+                ['radius.card-md', '16px', S() + MP(), 'card / radius / md', ''],
+                ['radius.card-md + offset', '18px', S() + SP() + MP(), 'card / radius / md / offset', '']]
+            },
+            {
+              id: 'borderwidth', label: 'Border Width', path: 'borderwidth.*', count: '4 tokens', cat: 'comp',
+              cols: ['Current Path', 'Value', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['borderwidth.focus lg', '4px', N() + MP(), 'focusring / width / lg', ''],
+                ['borderwidth.focus sm', '3px', N() + MP(), 'focusring / width / sm', ''],
+                ['borderwidth.toggle stroke', '2px', N() + MP(), 'toggle / width / stroke', ''],
+                ['borderwidth.checkbox radio', '2px', N() + MP(), 'radiocheck / width / default', '']]
+            },
+            {
+              id: 'focusring', label: 'Focus Ring', path: 'focusring.*', count: '14 tokens', cat: 'comp',
+              cols: ['Current Path', 'Value', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['focusring.focusring full', '#05857E', R() + V(), 'focusring / color / default', ''],
+                ['focusring.focusring', '#05857E', R(), 'focusring / color / default', 'Same name as parent'],
+                ['focusring.focusring-hc', 'alias: navy', R() + S(), 'focusring / color / hc', ''],
+                ['focusring.focusring width', '3px', R() + N(), 'focusring / width / default', ''],
+                ['focusring.focusring width textlinks', '2px', R() + N(), 'focusring / width / textlinks', ''],
+                ['focusring.focusring offset', '2px', R() + N(), 'focusring / offset / default', ''],
+                ['focusring.offset', '1px', N(), 'focusring / offset / default', 'Conflicts with above'],
+                ['focusring.radius checkbox', '6px', M(), 'focusring / radius / checkbox', 'Number mixed in color group'],
+                ['focusring.radius sm', '6px', M(), 'focusring / radius / sm', ''],
+                ['focusring.radius md', '10px', M(), 'focusring / radius / md', ''],
+                ['focusring.radius lg', '10px', M(), 'focusring / radius / lg', ''],
+                ['focusring.radius xl', '14px', M(), 'focusring / radius / xl', ''],
+                ['focusring.radius card', '18px', M(), 'focusring / radius / card', '']]
+            },
+            {
+              id: 'typography', label: 'Typography', path: 'typography.*', count: '~30 tokens', cat: 'typo',
+              cols: ['Current Path', 'Type', 'Value', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['typography.headerfont', 'string', 'Bitter', SP() + N(), 'typography / font / heading', ''],
+                ['typography.headerweight', 'string', 'Light', N(), 'typography / font / heading / weight', ''],
+                ['typography.lato weight', 'string', 'Regular', N() + V(), 'typography / font / body / weight', 'Typeface name used semantically'],
+                ['typography.large', 'number', '0', OR(), '— (orphaned)', 'Standalone 0 — unclear purpose'],
+                ['typography.fontsize.h1.large', 'number', '64', OK(), 'typography / size / h1 / large', ''],
+                ['typography.fontsize.h1.small (app)', 'number', '40', SP(), 'typography / size / h1 / small / app', 'Parentheses in key'],
+                ['typography.fontsize.h2.small (app)', 'number', '30', SP(), 'typography / size / h2 / small / app', ''],
+                ['typography.spacing.h1', 'number', '-2', OK(), 'typography / spacing / h1 / default', ''],
+                ['typography.spacing.h3 and smaller', 'number', '0', N() + V(), 'typography / spacing / h3', ''],
+                ['typography.lineheight.h1.large', 'number', '67.2', OK(), 'typography / lineheight / h1 / large', ''],
+                ['typography.lineheight.h1.small (app)', 'number', '42', SP(), 'typography / lineheight / h1 / small / app', '']]
+            },
+            {
+              id: 'layout', label: 'Layout', path: 'layout.*', count: '15 tokens', cat: 'spacing',
+              cols: ['Current Path', 'Value', 'Issues', 'Recommended Path', 'Notes'],
+              rows: [
+                ['layout.hero padding.large', '200px', N(), 'layout / hero / padding / large', ''],
+                ['layout.hero padding.wall', '128px', N(), 'layout / hero / padding / wall', ''],
+                ['layout.hero padding.small', '480px', N() + V(), 'layout / hero / padding / small', '⚠ "small" = 480px — naming mismatch?'],
+                ['layout.hero padding.mobile', '310px', N(), 'layout / hero / padding / mobile', ''],
+                ['layout.large hero extra.large', '44px', N() + V(), 'layout / hero / extra / large', '"large hero extra" — redundant adjective'],
+                ['layout.large hero extra.small', '0px', N() + V(), 'layout / hero / extra / small', ''],
+                ['layout.usp padding.large', '24px', N() + AB(), 'layout / usp / padding / large', '"usp" abbreviation'],
+                ['layout.usp padding.wall', '24px', N() + AB(), 'layout / usp / padding / wall', ''],
+                ['layout.usp padding.mobile', '16px', N() + AB(), 'layout / usp / padding / mobile', '']]
+            },
+          ];
+
+          const CAT_LABEL = { color: 'Semantic Color', comp: 'Component', typo: 'Typography', spacing: 'Spacing' };
+          const CAT_CLS = { color: 'ta-chip-color-cat', comp: 'ta-chip-comp-cat', typo: 'ta-chip-typo-cat', spacing: 'ta-chip-spacing-cat' };
+
+          // build nav
+          const nav = document.getElementById('ta-nav');
+          SECTIONS.forEach((sec, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'ta-nav-btn' + (i === 0 ? ' active' : '');
+            btn.textContent = sec.label;
+            btn.dataset.id = sec.id;
+            btn.addEventListener('click', () => taSwitch(sec.id));
+            nav.appendChild(btn);
+          });
+
+          // build panels
+          const content = document.getElementById('ta-content');
+          SECTIONS.forEach((sec, i) => {
+            const panel = document.createElement('div');
+            panel.className = 'ta-panel' + (i === 0 ? ' active' : '');
+            panel.id = 'ta-p-' + sec.id;
+
+            if (sec.custom) {
+              panel.innerHTML = `
+            <div class="ta-sec-hdr"><h3>Target Naming Structure</h3></div>
+            <div class="ta-struct-key-panel">
+              <div class="ta-sk-row-light"><span class="ta-sk-label">Semantic Color</span><span class="ta-sk-seg ta-seg-cat">color</span><span class="ta-sk-sep-light">/</span><span class="ta-sk-seg ta-seg-prop">property</span><span class="ta-sk-sep-light">/</span><span class="ta-sk-seg ta-seg-var">variant</span><span class="ta-sk-sep-light">/</span><span class="ta-sk-seg ta-seg-state">state</span><span style="font-size:10px;color:var(--muted);margin-left:8px">4 levels · e.g. color / text / secondary / hover</span></div>
+              <div class="ta-sk-row-light"><span class="ta-sk-label">Semantic Number</span><span class="ta-sk-seg ta-seg-cat">radius · borderwidth · typography · layout</span><span class="ta-sk-sep-light">/</span><span class="ta-sk-seg ta-seg-prop">property</span><span class="ta-sk-sep-light">/</span><span class="ta-sk-seg ta-seg-var">variant</span><span style="font-size:10px;color:var(--muted);margin-left:8px">3 levels · e.g. radius / btn / sm</span></div>
+              <div class="ta-sk-row-light"><span class="ta-sk-label">Component (simple)</span><span class="ta-sk-seg ta-seg-comp">component</span><span class="ta-sk-sep-light">/</span><span class="ta-sk-seg ta-seg-prop">property</span><span class="ta-sk-sep-light">/</span><span class="ta-sk-seg ta-seg-var">variant</span><span class="ta-sk-sep-light">/</span><span class="ta-sk-seg ta-seg-state">state</span><span style="font-size:10px;color:var(--muted);margin-left:8px">4 levels · e.g. nav / bg / solid / hover</span></div>
+              <div class="ta-sk-row-light"><span class="ta-sk-label">Component (complex)</span><span class="ta-sk-seg ta-seg-comp">component</span><span class="ta-sk-sep-light">/</span><span class="ta-sk-seg ta-seg-prop">property</span><span class="ta-sk-sep-light">/</span><span class="ta-sk-seg ta-seg-var">variant</span><span class="ta-sk-sep-light">/</span><span class="ta-sk-seg ta-seg-var">sub-variant</span><span class="ta-sk-sep-light">/</span><span class="ta-sk-seg ta-seg-state">state</span><span style="font-size:10px;color:var(--muted);margin-left:8px">5 levels · e.g. signal / success / solid / bg / normal</span></div>
+            </div>`;
+            } else {
+              const catChip = `<span class="ta-chip ${CAT_CLS[sec.cat]}">${CAT_LABEL[sec.cat]}</span>`;
+              const pathSpan = sec.path ? `<span class="ta-sec-path">${sec.path}</span>` : '';
+              const thead = `<tr>${sec.cols.map(c => `<th>${c}</th>`).join('')}</tr>`;
+              const tbody = sec.rows.map(r => {
+                const [cur, ...rest] = r;
+                let h = `<tr><td class="ta-mono">${cur}</td>`;
+                sec.cols.slice(1).forEach((col, ci) => {
+                  const val = rest[ci] ?? '';
+                  if (col === 'Recommended Path') h += `<td class="ta-rec">${val}</td>`;
+                  else if (col === 'Notes') h += `<td class="ta-note">${val}</td>`;
+                  else if (col === 'Value' || col === 'Value / Alias' || col === 'Type') h += `<td class="ta-val">${val}</td>`;
+                  else h += `<td>${val}</td>`;
+                });
+                h += `</tr>`; return h;
+              }).join('');
+              panel.innerHTML = `
+            <div class="ta-sec-hdr"><h3>${sec.label}</h3>${pathSpan}${catChip}<span class="ta-sec-count">${sec.count}</span></div>
+            <div class="ta-tbl-wrap"><table class="ta-tbl"><thead>${thead}</thead><tbody>${tbody}</tbody></table></div>`;
+            }
+            content.appendChild(panel);
+          });
+
+          function taSwitch(id) {
+            document.querySelectorAll('.ta-nav-btn').forEach(b => b.classList.toggle('active', b.dataset.id === id));
+            document.querySelectorAll('.ta-panel').forEach(p => p.classList.toggle('active', p.id === 'ta-p-' + id));
+          }
+        })();
+      </script>
+      <!-- ════ END TOKEN AUDIT SECTION ════ -->
+
+
+
+      <div class="phase reveal" id="User Research-phase2">
+        <div class="phase-header">
+          <div class="phase-num">2</div>
+          <div class="phase-title">Documentation</div>
+        </div>
+        <p>With hypotheses formed from discovery phase, I found users hold little perceived value for the overview
+          because <strong>there is a disconnect between the information it presents and their actual tasks.</strong>
+          The survey was designed to validate exactly this: what users are trying to accomplish when they open the
+          dashboard,
+          and whether the existing features support those goals.
+          <br> </br>
+          Rather than asking users to pick favourite features, the survey focused on usage frequency, task motivation,
+          and priority ranking,
+          to surface real workflows and mental models, not just feature preferences.
+        </p>
+        <img src="Survey.png" style="width:100%; max-width:800px; display:block; margin: 32px 0;">
+      </div>
+
+      <div class="phase reveal" id="KH-phase3">
+        <div class="phase-header">
+          <div class="phase-num">3</div>
+          <div class="phase-title">Co-Design Workshop</div>
+        </div>
+        <p>I made these sketch style components, designed a game for users to let them create their own dashboard.
+          All of the components are the corrsponding ones from the design system.
+          They can better understand the data points and functions they really want to add,
+          therefore customize their own experience and learn how to make better use of the components that are
+          available.</p>
+        <!-- Swipeable image carousel -->
+        <div style="position:relative; margin:18px 0;">
+
+          <!-- Outer clipping shell -->
+          <div id="carousel-codesign"
+            style="position:relative; overflow:hidden; border-radius:10px; cursor:grab; width:100%; height:440px; background:#ffffff;">
+
+            <!-- Inner sliding track -->
+            <div id="carousel-codesign-inner"
+              style="display:flex; height:100%; transition:transform 0.4s cubic-bezier(0.22,1,0.36,1);">
+              <div style="min-width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
+                <img src="1.png" style="max-width:100%; max-height:100%; object-fit:contain; user-select:none;">
+              </div>
+              <div style="min-width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
+                <img src="2.png" style="max-width:100%; max-height:100%; object-fit:contain; user-select:none;">
+              </div>
+              <div style="min-width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
+                <img src="3.png" style="max-width:100%; max-height:100%; object-fit:contain; user-select:none;">
+              </div>
+            </div>
+          </div>
+
+          <!-- Prev / Next buttons -->
+          <button onclick="carouselCodesign.slide(-1)" style="position:absolute; left:12px; top:50%; transform:translateY(-50%);
+    width:36px; height:36px; border-radius:50%; border:none; background:rgba(255, 255, 255);
+    box-shadow:0 2px 8px #bbb; cursor:pointer; font-size:16px; display:flex;
+    align-items:center; justify-content:center;">‹</button>
+          <button onclick="carouselCodesign.slide(1)" style="position:absolute; right:12px; top:50%; transform:translateY(-50%);
+    width:36px; height:36px; border-radius:50%; border:none; background:rgba(255,255,255);
+    box-shadow:0 2px 8px #bbb; cursor:pointer; font-size:16px; display:flex;
+    align-items:center; justify-content:center;">›</button>
+
+          <!-- Dots -->
+          <div id="dots-codesign"
+            style="position:absolute; bottom:12px; left:50%; transform:translateX(-50%); display:flex; gap:6px;">
+            <span onclick="carouselCodesign.goTo(0)"
+              style="width:6px;height:6px;border-radius:50%;background:#999;opacity:1;cursor:pointer;transition:opacity 0.2s;"></span>
+            <span onclick="carouselCodesign.goTo(1)"
+              style="width:6px;height:6px;border-radius:50%;background:#999;opacity:0.4;cursor:pointer;transition:opacity 0.2s;"></span>
+            <span onclick="carouselCodesign.goTo(2)"
+              style="width:6px;height:6px;border-radius:50%;background:#999;opacity:0.4;cursor:pointer;transition:opacity 0.2s;"></span>
+          </div>
+        </div>
+
+        <script>
+          const carouselCodesign = (() => {
+            const track = document.getElementById('carousel-codesign-inner');
+            const dots = document.getElementById('dots-codesign').children;
+            let cur = 0, total = track.children.length, startX = 0;
+
+            function goTo(n) {
+              cur = (n + total) % total;
+              track.style.transform = `translateX(-${cur * 100}%)`;
+              [...dots].forEach((d, i) => d.style.opacity = i === cur ? '1' : '0.4');
+            }
+            function slide(dir) { goTo(cur + dir); }
+
+            track.addEventListener('mousedown', e => { startX = e.clientX; track.style.cursor = 'grabbing'; });
+            track.addEventListener('mouseup', e => { if (e.clientX - startX < -40) slide(1); else if (e.clientX - startX > 40) slide(-1); track.style.cursor = 'grab'; });
+            track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+            track.addEventListener('touchend', e => { if (e.changedTouches[0].clientX - startX < -40) slide(1); else if (e.changedTouches[0].clientX - startX > 40) slide(-1); });
+
+            return { goTo, slide };
+          })();
+        </script>
+      </div>
+
+      <div class="phase reveal" id="KH-phase4">
+        <div class="phase-header">
+          <div class="phase-num">4</div>
+          <div class="phase-title">Outcome</div>
+        </div>
+        <p>The users used FigJam to have the "final designs" (see design clips on the right). </p>
+        <img src="Outcome.png" style="width:100%; max-width:800px; display:block; margin: 32px 0;">
+      </div>
+    </section>
+
+    <!-- PROTOTYPING -->
+    <section id="Prototyping" style="padding:0;border:none;">
+      <p class="section-label">Prototyping</p>
+      <div class="findings-grid stagger">
+
+        <div class="card-base" style="padding:0; overflow:hidden;">
+          <img src="Content_Mapping.png" onclick="openLightbox(this.src)"
+            style="width:100%; height:240px; object-fit:cover; display:block; filter:saturate(0.8);">
+          <div style="padding:18px 18px 20px;">
+            <h4>Figma Make</h4>
+            <p class="body">Using the sketch clients made, throw them into the Figma make to speed up the rapidly
+              wirframing.</p>
+          </div>
+        </div>
+
+        <div class="card-base" style="padding:0; overflow:hidden;">
+          <img src="Concreate.png" onclick="openLightbox(this.src)"
+            style="width:100%; height:240px; object-fit:cover; display:block; filter:saturate(0.8);">
+          <div style="padding:18px 18px 20px;">
+            <h4>Concrete idea</h4>
+            <p class="body">Evaluated whether the current design met the CS team’s requirements and aligned with survey
+              results, making small-scale adjustments where needed.</p>
+          </div>
+        </div>
+
+        <div class="card-base" style="padding:0; overflow:hidden;">
+          <img src="Exploration.png" onclick="openLightbox(this.src)"
+            style="width:100%; height:240px; object-fit:cover; display:block; filter:saturate(0.8);">
+          <div style="padding:18px 18px 20px;">
+            <h4>Explore variations again</h4>
+            <p class="body">
+              With a concrete direction established, I made targeted refinements: tightening the layout, adjusting
+              information hierarchy, and removing elements that not needed.</p>
+          </div>
+
+          <!-- Lightbox overlay -->
+          <div id="lightbox" onclick="closeLightbox()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999;
+     align-items:center; justify-content:center; cursor:zoom-out;">
+            <img id="lightbox-img" src=""
+              style="max-width:90vw; max-height:90vh; border-radius:8px; box-shadow:0 24px 80px rgba(0,0,0,0.5);">
+          </div>
+
+          <script>
+            function openLightbox(src) {
+              const lb = document.getElementById('lightbox');
+              document.getElementById('lightbox-img').src = src.replace('w=600', 'w=1400');
+              lb.style.display = 'flex';
+              document.addEventListener('keydown', escClose);
+            }
+            function closeLightbox() {
+              document.getElementById('lightbox').style.display = 'none';
+              document.removeEventListener('keydown', escClose);
+            }
+            function escClose(e) { if (e.key === 'Escape') closeLightbox(); }
+          </script>
+        </div>
+      </div>
+      </div>
+      <div style="padding-top:24px;">
+        <video src="prototype.mp4" style="width:100%; border-radius:10px;" autoplay loop muted playsinline>
+        </video>
+      </div>
+    </section>
+
+    <!-- FINAL DESIGN -->
+    <section id="Handoff">
+      <p class="section-label">Handoff</p>
+      <!-- BEFORE / AFTER -->
+      <h2 class="reveal">From fragmented to unified</h2>
+      <p>Guest number details were removed and replaced with a high-level reminder card. Direct text guidance was added
+        to navigation because users had no clear sense of where each link would take the. Finally, an AI suggestion
+        layer
+        was introduced to translate past client activity into recommended next steps, directly addressing the core
+        finding
+        that users saw little value in the overview because it showed datawithout direction.</p>
+      <div class="ba-container reveal" id="baContainer">
+        <!-- AFTER (base layer) -->
+        <div class="ba-after" style="padding:0;">
+          <img src="After.png" style="width:100%; height:100%; object-fit:cover; display:block;">
+        </div>
+
+        <!-- BEFORE (sliding overlay) -->
+        <div class="ba-before-wrap" id="baBeforeWrap">
+          <div class="ba-before" id="baBefore" style="padding:0;">
+            <img src="Before.png" style="width:100%; height:100%; object-fit:cover; display:block;">
+          </div>
+        </div>
+
+        <!-- divider + handle -->
+        <div class="ba-divider-line" id="baDivLine"></div>
+        <div class="ba-handle" id="baHandleBtn">
+          <svg viewBox="0 0 20 20">
+            <path d="M7 4l-4 6 4 6M13 4l4 6-4 6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" />
+          </svg>
+        </div>
+
+        <div class="ba-tag before">Before</div>
+        <div class="ba-tag after">After</div>
+      </div>
+    </section>
+
+    <div class="design-feature reveal">
+      <h3>Documentation</h3>
+      <img src="Readyfordev.png" style="max-width:100%; max-height:100%; object-fit:contain; user-select:none;">
+    </div>
+    </section>
+
+    <!-- REFLECTION -->
+    <section id="Takeaways">
+      <p class="section-label">Takeaways</p>
+      <h2 class="reveal">Invest in foundations, not surface fixes</h2>
+      <p class="reveal">Before touching the design, take time to build solid structural foundations. Information
+        architecture, a scalable design system, and thorough Figma handoff documentation: these "invisible work"
+        ultimately cut developer handover time significantly and kept the consistent across 100+ screens.</p>
+      <div class="reflection-grid stagger">
+        <div class="card-base">
+          <h4 class="serif" style="font-size:16px;margin-bottom:10px;">What I did well: Use AI tools to accelerate</h4>
+          <p class="body">Generating prototypes live in Figma Make during stakeholder interviews, and converting
+            co-design sketches directly into wireframes. These two moves compressed the gap between "idea" and
+            "validation" to nearly zero. The value of the tools wasn't in automating design decisions, but in making
+            conversations more concrete.</p>
+        </div>
+        <div class="card-base">
+          <h4 class="serif" style="font-size:16px;margin-bottom:10px;">What I can improve: Decisions need a single home
+          </h4>
+          <p class="body">Product requirements were scattered across multiple tools, and tracing the reasoning behind
+            any given decision was difficult without a single source of truth. Next time, I'd build a centralized
+            decision log, documenting not just what was decided, but why. That serves continuity, and it serves whoever
+            picks this up next.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OTHER PROJECTS -->
+    <section id="KH-otherprojects" style="border-bottom:none; padding-bottom: 0;">
+      <p class="section-label">More Work</p>
+      <h2 class="reveal">Other Projects</h2>
+      <div class="projects-grid">
+        <a href="#" class="proj-card reveal">
+          <div class="proj-thumb">
+            <img src="Orbisk_cover.png">
+          </div>
+          <div class="proj-info">
+            <span class="proj-tag">Dashboard Redesign</span>
+            <h3 class="proj-title">Orbisk(Saas) Overview Dashboard</h3>
+            <p class="proj-desc">Delivered a fully redesigned dashboard that enhanced navigation clarity and improved
+              client engagement and retention.</p>
+            <span class="proj-arrow">View project →</span>
+          </div>
+        </a>
+
+        <a href="#" class="proj-card reveal" style="transition-delay:0.1s">
+          <div class="proj-thumb" style="--c1:#fce8d4;--c2:#f5c9a0;">
+            <div class="proj-thumb-inner">
+              <div class="pt-bar" style="width:80%;background:rgba(180,90,20,0.2)"></div>
+              <div class="pt-bar" style="width:55%;background:rgba(180,90,20,0.15)"></div>
+              <div class="pt-row">
+                <div class="pt-block" style="background:rgba(180,90,20,0.25);flex:2"></div>
+                <div class="pt-block" style="background:rgba(180,90,20,0.15)"></div>
+              </div>
+              <div class="pt-bar" style="width:60%;background:rgba(180,90,20,0.12)"></div>
+            </div>
+          </div>
+          <div class="proj-info">
+            <span class="proj-tag">Claude Code + Figma</span>
+            <h3 class="proj-title">Generative Public Website</h3>
+            <p class="proj-desc">Reimagining the Picnic grocery delivery experience — from checkout flow to
+              personalisation.</p>
+            <span class="proj-arrow">View project →</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>© Yani Wang · Portfolio</span>
+    <div class="footer-right">
+      <a href="#">Instagram</a>
+      <a href="#">LinkedIn</a>
+      <a href="mailto:yannywang042@gmail.com">yannywang042@gmail.com</a>
+    </div>
+  </footer>
+
+  <script>
+    // ── PROGRESS BAR ──
+    const bar = document.getElementById('progress');
+    window.addEventListener('scroll', () => {
+      const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+      bar.style.width = pct + '%';
+    }, { passive: true });
+
+    // ── SCROLL REVEAL ──
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal, .stagger').forEach(el => io.observe(el));
+
+    // ── ACTIVE SIDE NAV ──
+    const navAs = document.querySelectorAll('.nav-a');
+    // 收集所有侧边导航对应的 section ID
+    const ids = Array.from(navAs).map(a => a.getAttribute('href').replace('#', ''));
+
+    function syncNav() {
+      let cur = '';
+      const scrollMid = window.scrollY + window.innerHeight * 0.35;
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && scrollMid >= el.offsetTop) cur = id;
+      });
+      navAs.forEach(a => {
+        const href = a.getAttribute('href').replace('#', '');
+        a.classList.toggle('active', href === cur);
+      });
+    }
+    window.addEventListener('scroll', syncNav, { passive: true });
+    syncNav();
+
+    // ── NUMBER COUNTER ANIMATION (linear 0 → target) ──
+    function animateCount(el, target, duration) {
+      const start = performance.now();
+      function tick(now) {
+        const t = Math.min((now - start) / duration, 1);
+        // linear progress, eased only at the very end
+        const eased = t < 0.85 ? t / 0.85 : 1 - Math.pow(1 - (t - 0.85) / 0.15, 2) * 0;
+        el.textContent = Math.round(eased * target);
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.count').forEach((el, i) => {
+            const target = parseInt(el.dataset.target);
+            // stagger each stat, longer duration for bigger numbers
+            const dur = target <= 10 ? 1200 : 2200;
+            setTimeout(() => animateCount(el, target, dur), i * 220);
+          });
+          statsObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    statsObserver.observe(document.getElementById('statsGrid'));
+
+    // ── FADE HEADLINE ──
+    const headline = "How did I transform a fragmented design landscape into a unified and scalable design system?";
+    const words = headline.split(' ');
+    const fh = document.getElementById('fadeHeadline');
+    fh.innerHTML = words.map((w, i) => `<span class="word" data-i="${i}">${w} </span>`).join('');
+    const wordEls = fh.querySelectorAll('.word');
+    const totalWords = wordEls.length;
+
+    function updateFadeHeadline() {
+      const rect = fh.getBoundingClientRect();
+      const winH = window.innerHeight;
+      const progress = (winH * 0.78 - rect.top) / (rect.height + winH * 0.3);
+      const lit = Math.max(0, Math.min(1, progress));
+      const litCount = Math.round(lit * totalWords);
+      wordEls.forEach((el, i) => el.classList.toggle('lit', i < litCount));
+    }
+    window.addEventListener('scroll', updateFadeHeadline, { passive: true });
+    updateFadeHeadline();
+
+    // ── BEFORE / AFTER SLIDER ──
+    const container = document.getElementById('baContainer');
+    const beforeWrap = document.getElementById('baBeforeWrap');
+    const beforeEl = document.getElementById('baBefore');
+    const divLine = document.getElementById('baDivLine');
+    const handle = document.getElementById('baHandleBtn');
+    let dragging = false;
+    let pct = 50;
+
+    function setSlider(x) {
+      const rect = container.getBoundingClientRect();
+      pct = Math.max(2, Math.min(98, (x - rect.left) / rect.width * 100));
+      beforeWrap.style.width = pct + '%';
+      divLine.style.left = pct + '%';
+      handle.style.left = pct + '%';
+      beforeEl.style.width = rect.width + 'px';
+      beforeEl.style.minWidth = rect.width + 'px';
+    }
+
+    container.addEventListener('mousedown', e => { dragging = true; setSlider(e.clientX); });
+    container.addEventListener('touchstart', e => { dragging = true; setSlider(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('mousemove', e => { if (dragging) setSlider(e.clientX); });
+    window.addEventListener('touchmove', e => { if (dragging) setSlider(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('mouseup', () => dragging = false);
+    window.addEventListener('touchend', () => dragging = false);
+
+    function initBA() {
+      const rect = container.getBoundingClientRect();
+      beforeEl.style.width = rect.width + 'px';
+      beforeEl.style.minWidth = rect.width + 'px';
+    }
+    window.addEventListener('resize', initBA);
+
+    const baObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          initBA();
+          const start = performance.now();
+          function sweep(now) {
+            const t = Math.min((now - start) / 1100, 1);
+            const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            const cur = eased * 50;
+            beforeWrap.style.width = cur + '%';
+            divLine.style.left = cur + '%';
+            handle.style.left = cur + '%';
+            if (t < 1) requestAnimationFrame(sweep);
+            else pct = 50;
+          }
+          requestAnimationFrame(sweep);
+          baObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    baObs.observe(container);
+
+  </script>
+
+</body>
+
+</html>
